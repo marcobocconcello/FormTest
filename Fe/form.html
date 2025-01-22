@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html leng="it">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatibile" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Form Test</h1>
+    <form action="">
+        <label for="testo">Testo</label>
+        <input type="text" id="txtId" name="testo" placeholder="Inserisci testo" list="suggestion" oninput="sendText()">
+        <datalist id="suggestion" oninput="changeList()">
+        </datalist>
+    </form>
+    <p id="demo"></p>
+    <div id="result"></div>
+
+    <script src="suggested.js"></script>
+</body>
+</html>
