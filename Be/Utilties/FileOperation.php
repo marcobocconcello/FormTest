@@ -1,5 +1,4 @@
 <?php
-
     enum Level : string{
         case Information = 'INFORMATION';
         case Warning = 'WARNING'; 
