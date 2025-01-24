@@ -2,6 +2,12 @@
      require_once 'C:\xampp\htdocs\Test\Be\Dto\Response.php'; 
      require_once 'C:\xampp\htdocs\Test\Be\Controllers\BaseController.php';
 
+     /*
+        * controller che necessita del repo sotto forma di interfaccia per DI nel costuttore
+        * di un'istanza della classe concreta MySqlCommand per chiudere le connessioni.
+        * di un'interfaccia per loggare sempre per DI.
+     */
+
     class ListenerController extends BaseController{
 
         private ITextSuggestionRepo $repo;

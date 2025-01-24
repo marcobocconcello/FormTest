@@ -1,6 +1,11 @@
 <?php
 
-    //singleton Class
+    /*
+        cstruito come singleton quindi:
+         * costuttore privato
+         * campo statico di tipo self istanziato a = null
+         * metoodo statico pubblico che controlla se il campo è istanziato e nel caso istanzia la classe, valorizza il campo con l'istanza e ritorna all'istanza corrente 
+    */
     class FileManager{
 
         //devo renderla nullable con ? alrrimenti problemi.

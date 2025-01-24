@@ -1,6 +1,8 @@
 <?php
     require_once 'C:\xampp\htdocs\Test\Be\Dto\Response.php'; 
-
+    /*
+        * il controller base funge da super classe per il controller quindi contiene campi metodi comuni a tutti i controller
+    */
     class BaseController{
         protected static function setResponse(string $statusCode, 
                                        array $data,

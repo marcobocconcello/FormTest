@@ -6,12 +6,10 @@
     }
 
     class FileOperation implements IFileOperation{
-        
-        private FileManager $file;
 
         public function __construct()
         {
-            $this->file = FileManager::istance();
+            FileManager::istance();
         }
         
         public function writelog(string $text, string $level)
@@ -22,7 +20,7 @@
                                     FILE_APPEND);
             }
             catch(Exception $ex){
-                throw $ex;
+                throw new Exception("Errore nella scrittura del file: $ex -> getMessage()");
             }
         }
 

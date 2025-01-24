@@ -2,7 +2,7 @@
 
     class Response {
         private int $statusCode;
-        private array $textArray; //= array();
+        private array $textArray;
 
         public function getTexts() : array{
             return $this->textArray;

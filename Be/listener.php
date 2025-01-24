@@ -11,6 +11,9 @@
     require_once 'C:\xampp\htdocs\Test\Be\Utilties\FileManager.php'; 
     require_once 'C:\xampp\htdocs\Test\Be\Utilties\IFileOperation.php';
     require_once 'C:\xampp\htdocs\Test\Be\Utilties\FileOperation.php';
+    require_once 'C:\xampp\htdocs\Test\Be\Dto\IAdapter.php';
+    require_once 'C:\xampp\htdocs\Test\Be\Dto\Adapter.php';
+    require_once 'C:\xampp\htdocs\Test\Be\Model\Testtable.php';
     
     try{
 
@@ -26,16 +29,36 @@
 
         $logger -> writelog("Start listener", Level::Information -> value);
 
+        $adapter = new Adapter($logger);
+
+        /*
+            Implementata la connessione seguendo uno pseudo Absatrct factory 
+            Questo per permettere eventualmente di implementare altri provider e/o altre crud.
+
+            dove:
+              * concrete products: sono le connessioni -> MySqlConnection, MySqlCommand
+              * abtract products sono i commandi -> IMySqlCommand
+              * la classe factory che orchestra le istanze dei concrete product è omessa ed è inglobata direttamente nel concrete product MySqlCommand
+        */
         $sqlClient = new MySqlCommand(HOST_NAME, 
                                         USER_NAME,
                                         PASSWORD,
                                         DB_NAME,
                                         $logger);
 
+        /*
+            Uso il pattern Repository in modo da separare l'accesso ai dati e quindi l'interfacciamento con il db rispetto al resto della logica
+        */
+
         $repo = new TextSuggestionRepo($sqlClient,
                                         DB_NAME,
                                         TABLE_NAME,
-                                        $logger);
+                                        $logger,
+                                        $adapter);
+
+        /*
+            Uso il pattern MV di una web api quindi istanzio il controller che si occupa di accedere ai dati sfruttando il repo.
+        */
 
         $controller = new ListenerController($repo, $sqlClient, $logger);
 
@@ -52,6 +75,7 @@
     }
     catch(Exception $ex){
         throw new Exception("Errore nella post. Mesage: " . $ex -> getMessage());
+        exit;
     }
 
 ?>

@@ -125,7 +125,7 @@
         public function select(string $tableName, string $columnName, string $testo): array{
             try{
                 
-                $querySelect = "    SELECT * 
+                $querySelect = "    SELECT id, possiblevalue
                                         FROM $tableName  
                                         WHERE $columnName LIKE('%$testo%')
                                         ";
@@ -134,10 +134,14 @@
 
                 $resultselect2 = $this -> myConnection -> get_connection()-> query($querySelect);
                 $data = array();
-                while($row= $resultselect2 -> fetch_array()){
-                    array_push($data, $row["possiblevalue"]);
-                }
 
+                $tmp = $resultselect2 -> fetch_all(MYSQLI_ASSOC);
+         
+                foreach($tmp as $dato){
+                    $tmp2 = new Testtable((int)$dato['id'],(string)$dato['possiblevalue']);
+                    array_push($data, $tmp2);             
+                }
+                
                 return $data;
                
 
