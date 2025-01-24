@@ -1,7 +1,7 @@
 <?php
 
-    require_once 'C:\xampp\htdocs\Test\Be\Context\IDbCommand.php';
-    require_once 'C:\xampp\htdocs\Test\Be\Context\MySqlConnection.php'; 
+    require_once 'C:\xampp\htdocs\FormTest\Be\Context\IDbCommand.php';
+    require_once 'C:\xampp\htdocs\FormTest\Be\Context\MySqlConnection.php'; 
 
     class MySqlCommand implements IDbCommand{
 
@@ -10,13 +10,13 @@
         private $password;
         private $database;
     
-        private MySqlConnection $myConnection;
-
         private IFileOperation $logger;
 
+        /*
         public function getMyConnection() : MySqlConnection{
             return $this->myConnection;
         }
+        */
 
         public function __construct(string $host,
                                     string $user,
@@ -28,7 +28,7 @@
             $this->user = $user;
             $this->password = $password;
             $this->database = $database;
-            $this-> myConnection = new MySqlConnection();
+           // $this-> myConnection = new MySqlConnection();
             $this->logger = $logger;
         }
 
@@ -38,7 +38,7 @@
             try{
 
                 $this->logger -> writelog("Inzio connessione...", Level::Information -> value);
-                $this -> myConnection -> Connect($this -> host,
+                MySqlConnection::Connect($this -> host,
                                                 $this -> user,
                                                 $this -> password,
                                                 $this -> database);
@@ -55,11 +55,11 @@
                     possiblevalue LONGTEXT
                 )";
 
-                $result = $this -> myConnection -> get_connection()-> query($queryTableEx);
+                $result = MySqlConnection::get_connection()-> query($queryTableEx);
                 $this->logger -> writelog("Risultato select per presenza tabella: $result->num_rows", Level::Information -> value);
 
                 if($result -> num_rows <= 0){
-                    $this -> myConnection -> get_connection()-> query($queryTableCreate);
+                    MySqlConnection::get_connection()-> query($queryTableCreate);
                     $this->logger -> writelog("Tabella creata", Level::Information -> value);
                     return true;
                 }
@@ -67,7 +67,7 @@
                 return false;
 
             }catch(Exception $ex){
-                $this -> myConnection -> get_connection()-> close();
+                MySqlConnection::get_connection()-> close();
                 $this->logger -> writelog("Errore nella creazione dell tabella: $ex -> getMessage()", Level::Error -> value);
                 throw new Exception("Errore nell'esecuzione della query. Message: ". $ex -> getMessage());
             }
@@ -107,16 +107,16 @@
                                     FROM $tableName
                                     WHERE $columnName LIKE('%p%')";
 
-                if(($this -> myConnection -> get_connection()-> query($querySelect) -> num_rows) <=0){
+                if((MySqlConnection::get_connection()-> query($querySelect) -> num_rows) <=0){
                     $this->logger -> writelog("Inserimento dei valori in quanto non ancora inseriti", Level::Information -> value);
-                    $this -> myConnection -> get_connection()-> query($queryInsert);
+                    MySqlConnection::get_connection()-> query($queryInsert);
                     return true;
                 }
                 $this->logger -> writelog("Inserimento dei valori non avvenuto in quanto già inseriti", Level::Information -> value);
                 return false;
 
             }catch(Exception $ex){
-                $this -> myConnection -> get_connection()-> close();
+                MySqlConnection::get_connection()-> close();
                 $this->logger -> writelog("Errore nell'insert sulla tabella: $ex -> getMessage()", Level::Error -> value);
                 throw new Exception("Errore nell'esecuzione della query. Message: ". $ex -> getMessage());
             }
@@ -132,7 +132,7 @@
 
                 $this->logger -> writelog("Inizio select degli elementi", Level::Information -> value);
 
-                $resultselect2 = $this -> myConnection -> get_connection()-> query($querySelect);
+                $resultselect2 = MySqlConnection::get_connection()-> query($querySelect);
                 $data = array();
 
                 $tmp = $resultselect2 -> fetch_all(MYSQLI_ASSOC);
@@ -146,7 +146,7 @@
                
 
             }catch(Exception $ex){
-                $this -> myConnection -> get_connection()-> close();
+                MySqlConnection::get_connection()-> close();
                 $this->logger -> writelog("Errore nella select: $ex -> getMessage()", Level::Error -> value);
                 throw new Exception("Errore nell'esecuzione della query. Message: ". $ex -> getMessage());
             }

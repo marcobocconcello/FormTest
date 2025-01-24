@@ -2,13 +2,13 @@
 
     class MySqlConnection{
 
-        private mysqli $connection;
+        private static mysqli $connection;
 
-        public function get_connection() : mysqli {
-            return $this-> connection;
+        public static function get_connection() : mysqli {
+            return self::$connection;
         }
 
-        public function Connect(string $host, 
+        public static function Connect(string $host, 
                                 string $user, 
                                 string $password, 
                                 string $database) : bool {
@@ -25,18 +25,18 @@
                     throw new Exception("Parametri di input richiesti per la connesione vuoti. $host, $user, $password");
                 }
 
-                $this -> connection = new mysqli(
+                self::$connection = new mysqli(
                     $host,
                     $user,
                     $password,
                     $database
                 );
             
-                return ($this -> connection == false) ? false : true;
+                return (self::$connection == false) ? false : true;
                 
 
             }catch(Exception $ex){
-                $this-> connection -> close();
+                self::$connection -> close();
                 throw new Exception("Errore nella connessione a db. Message: " . $ex -> getMessage());
             }
         }

@@ -1,6 +1,6 @@
 <?php
-     require_once 'C:\xampp\htdocs\Test\Be\Dto\Response.php'; 
-     require_once 'C:\xampp\htdocs\Test\Be\Controllers\BaseController.php';
+     require_once 'C:\xampp\htdocs\FormTest\Be\Dto\Response.php'; 
+     require_once 'C:\xampp\htdocs\FormTest\Be\Controllers\BaseController.php';
 
      /*
         * controller che necessita del repo sotto forma di interfaccia per DI nel costuttore
@@ -11,14 +11,11 @@
     class ListenerController extends BaseController{
 
         private ITextSuggestionRepo $repo;
-        private MySqlCommand $command;
         private IFileOperation $logger;
 
         public function __construct(ITextSuggestionRepo $repo, 
-                                    MySqlCommand $command,
                                     IFileOperation $logger)
         {
-            $this->command = $command;
             $this->repo = $repo;
             $this->logger = $logger;
         }
@@ -52,7 +49,7 @@
                                         $headerArray) -> toJson();
             }finally{
                 $this->logger -> writelog("Chiusura della connessione", Level::Information -> value);
-                $this -> command-> getMyConnection() -> get_connection() -> close();
+                MySqlConnection::get_connection() -> close();
                 exit;
             }
 

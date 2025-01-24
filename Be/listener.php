@@ -4,16 +4,16 @@
     //in questo caso sto recuperando il valore della chiave 'testo' in request 
     $testo =  $_POST["testo"];
 
-    require_once 'C:\xampp\htdocs\Test\Be\Repositories\TextSuggestionRepo.php'; 
-    require_once 'C:\xampp\htdocs\Test\Be\Context\MySqlCommand.php'; 
-    require_once 'C:\xampp\htdocs\Test\Be\Utilties\config.php'; 
-    require_once 'C:\xampp\htdocs\Test\Be\Controllers\ListenerController.php';
-    require_once 'C:\xampp\htdocs\Test\Be\Utilties\FileManager.php'; 
-    require_once 'C:\xampp\htdocs\Test\Be\Utilties\IFileOperation.php';
-    require_once 'C:\xampp\htdocs\Test\Be\Utilties\FileOperation.php';
-    require_once 'C:\xampp\htdocs\Test\Be\Dto\IAdapter.php';
-    require_once 'C:\xampp\htdocs\Test\Be\Dto\Adapter.php';
-    require_once 'C:\xampp\htdocs\Test\Be\Model\Testtable.php';
+    require_once 'C:\xampp\htdocs\FormTest\Be\Repositories\TextSuggestionRepo.php'; 
+    require_once 'C:\xampp\htdocs\FormTest\Be\Context\MySqlCommand.php'; 
+    require_once 'C:\xampp\htdocs\FormTest\Be\Utilties\config.php'; 
+    require_once 'C:\xampp\htdocs\FormTest\Be\Controllers\ListenerController.php';
+    require_once 'C:\xampp\htdocs\FormTest\Be\Utilties\FileManager.php'; 
+    require_once 'C:\xampp\htdocs\FormTest\Be\Utilties\IFileOperation.php';
+    require_once 'C:\xampp\htdocs\FormTest\Be\Utilties\FileOperation.php';
+    require_once 'C:\xampp\htdocs\FormTest\Be\Dto\IAdapter.php';
+    require_once 'C:\xampp\htdocs\FormTest\Be\Dto\Adapter.php';
+    require_once 'C:\xampp\htdocs\FormTest\Be\Model\Testtable.php';
     
     try{
 
@@ -60,7 +60,7 @@
             Uso il pattern MV di una web api quindi istanzio il controller che si occupa di accedere ai dati sfruttando il repo.
         */
 
-        $controller = new ListenerController($repo, $sqlClient, $logger);
+        $controller = new ListenerController($repo, $logger);
 
         switch($_SERVER["REQUEST_METHOD"]){
             
